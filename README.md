@@ -1,2 +1,4 @@
 # ESP32-Realtime-sensor-monitor
 ESP32 project that streams live temperature and humidity data to a web page using WebSockets. The browser updates instantly without any page refresh. Includes real-time statistics, a three-mode OLED display, and intent-aware button interaction. No delay used anywhere, everything runs on millis.
+
+https://github.com/user-attachments/assets/bd04b4df-7b88-41a9-810d-58a94382016a
