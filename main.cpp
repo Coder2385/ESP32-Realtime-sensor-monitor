@@ -248,20 +248,22 @@ void loop() {
         if (sensorReady && oledReady) {
          float temp = bme.readTemperature();
          float hum = bme.readHumidity();
-
+         
+         // Build CSV string with sensor data and statistics, then broadcast to all connected WebSocket clients
          String data = String(temp, 2) + "," + String(hum, 2) + "," + String(minTemp, 2) + "," + String(maxTemp, 2) + "," + String(threshold);
          ws.textAll(data);
-
+         
+         // Update statistics with latest temperature reading
          if (temp < minTemp) {
-           minTemp = temp;
+           minTemp = temp;   // New lowest temperature recorded
          }
 
          if (temp > maxTemp) {
-           maxTemp = temp;
+           maxTemp = temp;  // New highest temperature recorded
          }
 
          if (temp > TEMP_DREMPEL) {
-           threshold += 1;
+           threshold += 1;  // Increment threshold exceeded counter
          }
         
         // Control warning LED based on temperature threshold
@@ -302,7 +304,7 @@ void loop() {
           unsigned long pressDuration = millis() - startTime;
           // If held for 2+ seconds and not already processed
           if (pressDuration >= 2000 && !longPressDetected) {
-
+            // Cycle through modes on long press: SENSOR → INFO → STATS → SENSOR
             if (currentMode == MODE_SENSOR) {
               currentMode = MODE_INFO;
             } else if (currentMode == MODE_INFO) {
